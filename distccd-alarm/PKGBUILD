@@ -1,0 +1,54 @@
+# $Id$
+# Maintainer: Jason Plum <jplum@archlinuxarm.org>
+# Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
+
+noautobuild=1
+
+pkgname=('distccd-alarm')
+pkgver=4.7.2
+pkgrel=1
+pkgdesc="An x-tools & distcc services package for Arch Linux ARM"
+arch=('x86_64')
+license=('GPL' )
+url="http://archlinuxarm.org/developers/distcc-cross-compiling"
+depends=('distcc')
+options=('libtool' 'emptydirs' '!strip')
+source=(http://archlinuxarm.org/builder/xtools/x-tools.tar.xz
+	http://archlinuxarm.org/builder/xtools/x-tools6h.tar.xz
+	http://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
+	http://archlinuxarm.org/builder/xtools/distccd-alarm-files.tar.xz
+        )
+md5sums=('121bee2020d22ebcd0558743f03c2b63'
+         '90af57b6610b622340edc7166f316761'
+         'ad5ebe4481ceff9ebcebd80ac1c11303'
+         'cbca244d00d8ca4fa4630ef20c16b6f4')
+backup=('etc/conf.d/distccd-armv5'
+	'etc/conf.d/distccd-armv6h'
+	'etc/conf.d/distccd-armv7h'
+	)
+
+package () {
+   
+   
+   install -d "${pkgdir}/usr/bin"
+   ln -sf /usr/bin/distccd "${pkgdir}/usr/bin/distccd-armv5"
+   ln -sf /usr/bin/distccd "${pkgdir}/usr/bin/distccd-armv6h"
+   ln -sf /usr/bin/distccd "${pkgdir}/usr/bin/distccd-armv7h"
+
+   install -d "${pkgdir}/usr/local/x-tools-armv5"
+   cp -ar "${srcdir}/x-tools/"   "${pkgdir}/usr/local/x-tools-armv5"
+   install -d "${pkgdir}/usr/local/x-tools-armv6h"
+   cp -ar "${srcdir}/x-tools6h/" "${pkgdir}/usr/local/x-tools-armv6h"
+   install -d "${pkgdir}/usr/local/x-tools-armv7h"
+   cp -ar "${srcdir}/x-tools7h/" "${pkgdir}/usr/local/x-tools-armv7h"
+      
+   install -Dm0644 "${srcdir}/services/distccd-armv5.service"  "${pkgdir}/usr/lib/systemd/system/distccd-armv5.service"
+   install -Dm0644 "${srcdir}/services/distccd-armv6h.service" "${pkgdir}/usr/lib/systemd/system/distccd-armv6h.service"
+   install -Dm0644 "${srcdir}/services/distccd-armv7h.service" "${pkgdir}/usr/lib/systemd/system/distccd-armv7h.service"
+   
+   install -Dm0644 "${srcdir}/conf.d/distccd-armv5"  "${pkgdir}/etc/conf.d/distccd-armv5"
+   install -Dm0644 "${srcdir}/conf.d/distccd-armv6h" "${pkgdir}/etc/conf.d/distccd-armv6h"
+   install -Dm0644 "${srcdir}/conf.d/distccd-armv7h" "${pkgdir}/etc/conf.d/distccd-armv7h"
+   
+}
+
