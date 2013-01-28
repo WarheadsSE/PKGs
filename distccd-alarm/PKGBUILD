@@ -27,15 +27,14 @@ source=(http://archlinuxarm.org/builder/xtools/x-tools.tar.xz
 	distccd-armv6h.service
         )
 md5sums=('121bee2020d22ebcd0558743f03c2b63'
-        '90af57b6610b622340edc7166f316761'
-        'ad5ebe4481ceff9ebcebd80ac1c11303'
-	'1f8e65ea7ba90bd0e32f766593b991af'
-	'41d29c84a9624653040491226cbf287d'
-	'd66849097930897b2638905131a6ddf3'
-	'e760b78b6d8c4d94ba1540ee0a9e33b9'
-	'9e686ad426e7d9f9a65c0ba5c70c128a'
-	'0f2ed6569e6f9de9ce63c9550b68a7a7'
-	)
+         '90af57b6610b622340edc7166f316761'
+         'ad5ebe4481ceff9ebcebd80ac1c11303'
+         '3706fb6f1c891717861f1101233bebbd'
+         '41d29c84a9624653040491226cbf287d'
+         '4c7552805af92262356d262b14c8f173'
+         'e760b78b6d8c4d94ba1540ee0a9e33b9'
+         '8bd7cddb50f8c41f6a3e87a1d1d95b0b'
+         '0f2ed6569e6f9de9ce63c9550b68a7a7')
 
 _package_subarch() {
     # backup configs
