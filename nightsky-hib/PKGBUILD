@@ -51,7 +51,7 @@ package() {
 
   # Install launcher 
   install -Dm755 "${srcdir}/${pkgname}.sh" \
-                 "${pkgdir}/usr/bin/NighySkyHD"
+                 "${pkgdir}/usr/bin/NightSkyHD"
   # install symlink for launcher
   case $CARCH in i686) _arch='';; x86_64) _arch=_64;; esac
   chmod 755 "${pkgdir}/opt/NightSky/NightSkyHD${_arch}"
