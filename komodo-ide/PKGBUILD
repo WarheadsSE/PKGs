@@ -1,7 +1,7 @@
 # Maintainer: JokerBoy <jokerboy at punctweb dot ro>
 
 pkgname=komodo-ide
-pkgver=8.5.0_81977
+pkgver=8.5.2_82628
 pkgrel=1
 pkgdesc="Proprietary version of ActiveState Komodo Edit - Based on XUL"
 arch=('i686' 'x86_64')
