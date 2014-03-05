@@ -1,0 +1,72 @@
+# Maintainer: Niels Martignène <niels.martignene@gmail.com>
+# Contributor: PyroPeter <googlemail.com@abi1789>
+# Contributor: darkapex <me@jailuthra.in>
+# Contributor: tty0 <vt.tty0[d0t]gmail.com>
+# Contributor: Jason Plum <jplum@archlinuxarm>
+# note: only change is -Dplatform=linux due to platform detection failure.
+
+pkgname=arduino
+epoch=1
+pkgver=1.0.5
+pkgrel=5
+pkgdesc="Arduino prototyping platform SDK"
+arch=('i686' 'x86_64')
+url="http://arduino.cc/en/Main/Software"
+options=(!strip)
+license=('GPL' 'LGPL')
+depends=('avr-gcc' 'avr-libc' 'avrdude' 'libusb-compat' 'java-runtime' 'java-rxtx')
+makedepends=('java-environment' 'apache-ant')
+optdepends=('gtk2: Arduino IDE')
+install="arduino.install"
+source=("http://arduino.googlecode.com/files/arduino-1.0.5-src.tar.gz"
+        'arduino-fix-arguments.patch'
+        'arduino-ide-add-board-options.patch'
+        'arduino-gcc-4.8-no-use-cxa-atexit.patch'
+        'arduino.png'
+        'arduino.desktop')
+md5sums=('751dcd10e14da6ea4c34a24a202e7382'
+         'e7acaacc919c041c1faa36b7ba73c938'
+         '201fa159a6be7b17e8cd2822c4ff4326'
+         '57a444a1fe8328b56563388c015b5e2f'
+         '9e36d33891d5e68d38ec55d1494499a5'
+         'eebc4d6495864bea99ad057af801afb9')
+
+prepare() {
+  cd "${srcdir}/arduino-${pkgver}"
+
+  patch -Np1 <"${srcdir}/arduino-fix-arguments.patch"
+  patch -Np1 <"${srcdir}/arduino-gcc-4.8-no-use-cxa-atexit.patch"
+  patch -Np1 <"${srcdir}/arduino-ide-add-board-options.patch" 
+}
+
+build() {
+  cd "${srcdir}/arduino-${pkgver}/build"
+
+  ant -Dversion=1.0.5 -Dplatform=linux dist
+}
+
+package() {
+  cd "${srcdir}/arduino-${pkgver}/build/linux/work"
+
+  mkdir -p "${pkgdir}/usr/bin"
+  mkdir -p "${pkgdir}/usr/share/"{doc,applications,pixmaps}
+
+  # use Arch's avr toolchain
+  rm -rf hardware/tools/*
+
+  # copy the whole SDK to /usr/share/arduino/
+  cp -a . "${pkgdir}/usr/share/arduino"
+
+  # use system's RXTX library
+  ln -sf /usr/lib/librxtxSerial.so "${pkgdir}/usr/share/arduino/lib/librxtxSerial.so"
+  ln -sf /usr/lib/librxtxSerial.so "${pkgdir}/usr/share/arduino/lib/librxtxSerial64.so"
+  ln -sf /usr/share/java/rxtx/RXTXcomm.jar "${pkgdir}/usr/share/arduino/lib/RXTXcomm.jar"
+
+  # at least support the FHS a little bit
+  ln -s /usr/share/arduino/arduino "${pkgdir}/usr/bin/arduino"
+  ln -s /usr/share/arduino/reference "${pkgdir}/usr/share/doc/arduino"
+
+  # desktop icon
+  install -m644 "${srcdir}/arduino.desktop" "${pkgdir}/usr/share/applications/"
+  install -m644 "${srcdir}/arduino.png" "${pkgdir}/usr/share/pixmaps/"
+}
