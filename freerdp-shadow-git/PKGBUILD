@@ -1,0 +1,43 @@
+# Maintainer: Christian Hesse <mail@eworm.de>
+# Contributor: Alexey Vasiliev <robbinton@gmail.com>
+
+_branch="shadow"
+pkgname="freerdp-${_branch}-git"
+pkgdesc="Free RDP client - git checkout"
+pkgver=invalid
+pkgrel=1
+depends=('openssl' 'libxcursor' 'libcups' 'alsa-lib' 'libxext' 'libxdamage'
+         'ffmpeg' 'libxkbfile' 'libxinerama' 'libxv')
+makedepends=('git' 'krb5' 'cmake' 'damageproto')
+arch=('i686' 'x86_64')
+url="http://www.freerdp.com/"
+license=('GPL')
+provides=(freerdp)
+conflicts=(freerdp)
+source=("freerdp::git://github.com/awakecoding/FreeRDP.git#branch=$_branch")
+
+pkgver() {
+	cd freerdp/
+    echo "0.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd freerdp/
+
+	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
+	cmake \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DWITH_PULSE=ON \
+		-DWITH_SERVER=ON \
+		.
+	make
+}
+
+package() {
+	cd freerdp/
+
+	make DESTDIR="${pkgdir}/" install
+}
+
+sha256sums=('SKIP')
