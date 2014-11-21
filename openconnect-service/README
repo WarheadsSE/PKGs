@@ -1,0 +1,36 @@
+What is it:
+===========
+Systemd service & socket for start/stop openconnect without manual running. Why? Because I got tired of doing this by hand, and I don't use Connman or NetworkManger.
+
+This allows me to start/stop my vpn on my whim, and do so without storing the passwords in a user-readable form.
+
+Directions for use:
+===================
+* start/enable openconnect@vpn.example.com.socket
+* echo/cat your [username &] password to /run/openconnect/vpn.example.com
+* stop openconnect@vpn.example.com.service to disconnect.
+
+Input:
+======
+* AuthGroup (if not set in config)
+* Username (if not set in config)
+* Password (required)
+
+
+Example:
+========
+systemctl enable openconnect@vpn.example.com.socket
+echo "correcthorsebatterystaple" > /run/openconnect/vpn.example.com
+systemctl status openconnect@vpn.example.com.service
+systemctl stop openconnect@vpn.example.com.service
+
+
+systemctl enable openconnect@vpn.example.com.socket
+echo "jplum\ncorrecthosrebatterystaple" > /run/openconnect/vpn.example.com
+systemctl status openconnect@vpn.example.com.service
+systemctl stop openconnect@vpn.example.com.service
+
+systemctl enable openconnect@vpn.example.com.socket
+cat ~/my-vpn-creds > /run/openconnect/vpn.example.com
+systemctl status openconnect@vpn.example.com.service
+systemctl stop openconnect@vpn.example.com.service
