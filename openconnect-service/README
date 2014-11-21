@@ -4,6 +4,11 @@ Systemd service & socket for start/stop openconnect without manual running. Why?
 
 This allows me to start/stop my vpn on my whim, and do so without storing the passwords in a user-readable form.
 
+Configuration:
+==============
+See /etc/openconnect/vpn.example.com
+See man openconnect for --config
+
 Directions for use:
 ===================
 * start/enable openconnect@vpn.example.com.socket
