@@ -1,0 +1,34 @@
+# Maintainer: Jason Plum <jplum at archlinuxarm dot org>
+
+pkgname=qwpasupplicant-git
+pkgver=r168.g5563814
+pkgrel=1
+pkgdesc="QWpaSupplicant Library (Qt)"
+arch=('i686' 'x86_64')
+url="https://bitbucket.org/devonit/qwpasupplicant"
+license=('LGPL')
+depends=('qt4' 'wpa_supplicant')
+makedepends=('git')
+source=(git+https://bitbucket.org/devonit/qwpasupplicant.git)
+md5sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir"/qwpasupplicant
+  local r=$(git rev-list --count HEAD)
+  local h=$(git rev-parse --short HEAD)
+  echo "r$r.g$h"
+}
+
+build() {
+  cd "$srcdir"/qwpasupplicant
+  mkdir build
+  cd build
+  qmake-qt4 PREFIX=/usr ..
+  make
+}
+
+package() {
+  cd "$srcdir"/qwpasupplicant
+  cd build
+  make INSTALL_ROOT="$pkgdir" install
+}
