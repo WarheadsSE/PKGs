@@ -1,0 +1,50 @@
+# Maintainer: Jason Plum <jplum at archlinuxarm dot org>
+
+pkgname=kdsoap
+pkgver=1.4.0
+pkgrel=1
+pkgdesc="KD Soap Library (Qt)"
+arch=('i686' 'x86_64')
+url="http://www.kdab.com/kdab-products/kd-soap/"
+license=('LGPL')
+depends=('qt4')
+makedepends=('python2' 'git')
+source=("git+https://github.com/KDAB/KDSoap.git")
+# these can be generated on the fly, and thus are not reliable checksums.
+md5sums=('SKIP')
+
+prepare() {
+    cd "$srcdir/KDSoap"
+    git checkout "$pkgname-$pkgver"
+    git submodule init
+    git submodule update
+    
+    # Use Python 2
+    find . -name '*.py' -exec sed -i -r 's|/usr/bin/python$|&2|g' {} +
+    find . -name '*.py' -exec sed -i -r 's|/usr/bin/env python$|&2|g' {} +
+    
+    # There are still a lot of relative calls which need a workaround
+    mkdir "$srcdir/python2-path"
+    ln -s /usr/bin/python2 "$srcdir/python2-path/python"
+    export PATH="$srcdir/python2-path:$PATH"
+    echo "RUNNING AUTOGEN"
+    # run the autogen/configure.
+    ./autogen.py \
+        -prefix /usr \
+        -release \
+        -shared \
+        -no-unittests
+    echo "ENDING AUTOGEN"
+}
+
+build() {
+    cd "$srcdir/KDSoap"
+    export PATH="$srcdir/python2-path:$PATH"
+    make
+}
+
+package() {
+    cd "$srcdir/KDSoap"
+    
+    make INSTALL_ROOT="$pkgdir" install
+}
