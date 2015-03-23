@@ -13,12 +13,13 @@ md5sums=(
         '1acbeac837c7867a5c692dd92d8db6f9'
         '83571ae0c87ab32ce5bdccfb065f54b8'
         '270cb6b2be5c518ddf31a09b5c0b69c3')
+install=${pkgname}.install
 
 package() {
-    install -dm644 ${srcdir}/gadget-deadbef.modules-load \
+    install -Dm644 ${srcdir}/gadget-deadbeef.modules-load \
         ${pkgdir}/etc/modules-load.d/gadget-deadbeef.conf
-    install -dm644 ${srcdir}/gadget-deadbef.modprobe \
+    install -Dm644 ${srcdir}/gadget-deadbeef.modprobe \
         ${pkgdir}/etc/modprobe.d/gadget-deadbeef.conf
-    install -dm644 ${srcdir}/gadget-deadbef.network \
-        ${pkgdir}/etc/systemd-networkd/gadget-deadbeef.network
+    install -Dm644 ${srcdir}/gadget-deadbeef.network \
+        ${pkgdir}/etc/systemd/network/gadget-deadbeef.network
 }
