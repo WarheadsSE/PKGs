@@ -1,0 +1,24 @@
+#contributor: Jason Plum <jplum@archlinuarm.org>
+pkgname=gadget-deadbeef
+pkgver=0.1
+pkgrel=1
+pkgdesc=
+arch=('any')
+url=
+license=('GPL2')
+source=('gadget-deadbeef.modprobe'
+        'gadget-deadbeef.modules-load'
+        'gadget-deadbeef.network')
+md5sums=(
+        '1acbeac837c7867a5c692dd92d8db6f9'
+        '83571ae0c87ab32ce5bdccfb065f54b8'
+        '270cb6b2be5c518ddf31a09b5c0b69c3')
+
+package() {
+    install -dm644 ${srcdir}/gadget-deadbef.modules-load \
+        ${pkgdir}/etc/modules-load.d/gadget-deadbeef.conf
+    install -dm644 ${srcdir}/gadget-deadbef.modprobe \
+        ${pkgdir}/etc/modprobe.d/gadget-deadbeef.conf
+    install -dm644 ${srcdir}/gadget-deadbef.network \
+        ${pkgdir}/etc/systemd-networkd/gadget-deadbeef.network
+}
