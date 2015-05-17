@@ -4,18 +4,19 @@
 # Contributor: metzen <metzen@gmail.com>
 
 pkgname=logmein-hamachi
-pkgver=2.1.0.86
+pkgver=2.1.0.101
 pkgrel=1
 pkgdesc="A zero-configuration VPN service"
-arch=("i686" "x86_64" "arm")
+arch=("i686" "x86_64" "arm" "armv6h")
 url="https://secure.logmein.com/AU/labs/#HamachiforLinux"
 license=("custom")
 conflicts=("hamachi")
 replaces=("hamachi")
 options=("!strip")
-[ "${CARCH}" == "i686" ] && filearch=x86 && sha1sums=('76ef3a15503862210eb6f07682cba02c88e68583')
-[ "${CARCH}" == "x86_64" ] && filearch=x64 && sha1sums=('87d26165dcf1e695c80fcfae18ddfe1d241da2fe')
-[ "${CARCH}" == "arm" ] && filearch=armel && sha1sums=('7eb1605e2f50afbaa9819d20aab02e0da70e1fb0')
+[ "${CARCH}" == "i686" ] && filearch=x86 && sha1sums=('4493113af22f2ebd50d8be42fc280a2c583c31f8')
+[ "${CARCH}" == "x86_64" ] && filearch=x64 && sha1sums=('998bd7b0d4ec709f47d17cb706fd7fc912f657a1')
+[ "${CARCH}" == "arm" ] && filearch=armel && sha1sums=('475f5bb249a39061960de5776b4b6d665fe7f4df')
+[ "${CARCH}" == "armv6h" ] && filearch=armel && sha1sums=('475f5bb249a39061960de5776b4b6d665fe7f4df')
 
 source=("https://secure.logmein.com/labs/${pkgname}-${pkgver}-${filearch}.tgz")
 
