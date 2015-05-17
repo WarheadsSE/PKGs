@@ -9,7 +9,7 @@ _subarchs=(armv5 armv6h armv7h)
 pkgbase='distccd-alarm'
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
 pkgver=4.9.2
-pkgrel=2
+pkgrel=4
 pkgdesc="An x-tools & distcc services package for Arch Linux ARM"
 arch=('x86_64')
 license=('GPL' )
@@ -27,9 +27,9 @@ source=(http://archlinuxarm.org/builder/xtools/x-tools.tar.xz
 	distccd-armv6h.service
         )
 
-md5sums=('d963687917e005a1de10f295f818c607'
-         'f22c0320d388cfb45db7e4984a9c6ea2'
-         'f1772946969d3be30848856c8ff989ac'
+md5sums=('abe09ecca53b0c7f103c0466f9413579'
+         '6b95b0b1c47c66191501ab6918d70a6c'
+         'ccbfa040c1949dad6d32505fa9d973b9'
          '3706fb6f1c891717861f1101233bebbd'
          '41d29c84a9624653040491226cbf287d'
          '717a4bc07b1c7ad4461603a633e6a008'
