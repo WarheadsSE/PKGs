@@ -1,0 +1,50 @@
+From c2c7feec67ea544599fc147f11aa2ed510e1339d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
+Date: Fri, 13 Nov 2015 12:44:43 +0200
+Subject: [PATCH] drm/i915: Always keep cursor WM at its highest on VLV/CHV
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Cursor updates don't do any vblank waits, and so we risk underruns
+when turning the cursor off due to the watermark update happening
+before the cursor has actually stopped scanning out.
+
+As an interim hack (until we get proper two stage watermark
+progarmming), just keep the cursor WM at its highest level
+regardless of the state of the cursor plane. This is quite OK
+actually since the cursor has a dedicated FIFO, and so we
+don't have to worry about having the watermark not fit in the
+FIFO.
+
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+---
+ drivers/gpu/drm/i915/intel_pm.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/intel_pm.c b/drivers/gpu/drm/i915/intel_pm.c
+index dca7db2..2ea0b91 100644
+--- a/drivers/gpu/drm/i915/intel_pm.c
++++ b/drivers/gpu/drm/i915/intel_pm.c
+@@ -936,8 +936,16 @@ static uint16_t vlv_compute_wm_level(struct intel_plane *plane,
+ 	if (dev_priv->wm.pri_latency[level] == 0)
+ 		return USHRT_MAX;
+ 
+-	if (!state->visible)
+-		return 0;
++	if (!state->visible) {
++		/*
++		 * FIXME need proper two stage watermark update,
++		 * otherwise risk underruns when turning off the
++		 * cursor. For other planes we supposedly have
++		 * vblank waits around the plane disable to avoid
++		 * this, but that too is sub-optimal.
++		 */
++		return plane->base.type == DRM_PLANE_TYPE_CURSOR ? 63 : 0;
++	}
+ 
+ 	pixel_size = drm_format_plane_cpp(state->base.fb->pixel_format, 0);
+ 	clock = crtc->config->base.adjusted_mode.crtc_clock;
+-- 
+2.4.10
+
