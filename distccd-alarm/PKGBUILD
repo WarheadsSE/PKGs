@@ -9,7 +9,7 @@ _subarchs=(armv5 armv6h armv7h)
 pkgbase='distccd-alarm'
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
 pkgver=5.3.0
-pkgrel=3
+pkgrel=3.1
 pkgdesc="An x-tools & distcc services package for Arch Linux ARM"
 arch=('x86_64')
 license=('GPL' )
@@ -17,24 +17,31 @@ url="http://archlinuxarm.org/developers/distcc-cross-compiling"
 depends=('distcc')
 options=('libtool' 'emptydirs' '!strip')
 source=(http://archlinuxarm.org/builder/xtools/x-tools.tar.xz
-	http://archlinuxarm.org/builder/xtools/x-tools6h.tar.xz
-	http://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
-	distccd-armv5.conf
-	distccd-armv5.service
-	distccd-armv7h.conf
-	distccd-armv7h.service
-	distccd-armv6h.conf
-	distccd-armv6h.service
+        http://archlinuxarm.org/builder/xtools/x-tools6h.tar.xz
+        http://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
+        http://archlinuxarm.org/builder/xtools/x-tools8.tar.xz
+        distccd-armv5.conf
+        distccd-armv5.service
+        distccd-armv6h.conf
+        distccd-armv6h.service
+        distccd-armv7h.conf
+        distccd-armv7h.service
+        distccd-armv8.conf
+        distccd-armv8.service
         )
 md5sums=('6b592fb34347e1d98dd1b22b38ec9414'
          '2687a3d96c0002ce0effe9b95dd125eb'
          '26b681b0ed043d481b1fa8404075302a'
+         'fb774dffc1cd9471de03bdb56fa36626'
          '3706fb6f1c891717861f1101233bebbd'
          '41d29c84a9624653040491226cbf287d'
+         'c15d726a8b9708eda6d274dbae11783e'
+         '0f2ed6569e6f9de9ce63c9550b68a7a7'
          '717a4bc07b1c7ad4461603a633e6a008'
          'e760b78b6d8c4d94ba1540ee0a9e33b9'
-         'c15d726a8b9708eda6d274dbae11783e'
-         '0f2ed6569e6f9de9ce63c9550b68a7a7')
+         'ca0ab42032060b2ab5da525bab0a46a8'
+         '3da954cb728f347c142eb42f65477593'
+        )
 _package_subarch() {
     # backup configs
     backup=("etc/conf.d/distccd-$1")
