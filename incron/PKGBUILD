@@ -1,0 +1,47 @@
+# $Id: PKGBUILD 151573 2015-12-10 03:57:06Z foutrelis $
+# Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Contributor: Roberto Alsina <ralsina@kde.org>
+# Contributor: scj <scj(at)archlinux(dot)us>
+# Contributor: Jason Plum <jplum@archlinuxarm.org>
+
+pkgname=incron
+pkgver=0.5.12
+pkgrel=1
+pkgdesc="Like the regular cron but is driven by filesystem events instead of time periods"
+arch=('i686' 'x86_64')
+url="http://incron.aiken.cz/"
+license=('GPL')
+depends=('gcc-libs' 'bash')
+install=incron.install
+options=('emptydirs')
+source=("https://github.com/ar-/incron/archive/0.5.12.tar.gz")
+
+md5sums=('f7456b73875f44f36eaa818e3f105f76')
+
+prepare() {
+  cd "${srcdir}"/$pkgname-$pkgver
+  # move all from /sbin to /bin
+  sed -i 's|$(DESTDIR)$(PREFIX)/sbin/|$(DESTDIR)$(PREFIX)/bin/|g' Makefile
+  # remove INITDIR
+  sed -i '/INITDIR/d' Makefile
+}
+
+build() {
+  cd "${srcdir}"/$pkgname-$pkgver
+  make
+}
+
+package() {
+  cd "${srcdir}"/$pkgname-$pkgver
+
+  make PREFIX="${pkgdir}"/usr \
+    MANPATH="${pkgdir}"/usr/share/man \
+    USERDATADIR="${pkgdir}"/var/spool/incron \
+    CFGDIR="${pkgdir}"/etc \
+    SYSDATADIR="${pkgdir}"/etc/incron.d \
+    INITDIR="${pkgdir}"/etc/init \
+    install
+
+  install -Dm0644 "${srcdir}/$pkgname-$pkgver/debian/incron.service" \
+    "${pkgdir}/usr/lib/systemd/system/incron.service"
+}
