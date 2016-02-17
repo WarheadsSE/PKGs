@@ -1,0 +1,48 @@
+# Maintainer: Christian Hesse <mail@eworm.de>
+# Contributor: Alexey Vasiliev <robbinton@gmail.com>
+
+pkgname=freerdp-git
+pkgdesc='Free RDP client - git checkout'
+pkgver=2.0
+pkgrel=1
+depends=('openssl' 'libxcursor' 'libcups' 'alsa-lib' 'libxext' 'libxdamage'
+         'ffmpeg' 'libxkbfile' 'libxinerama' 'libxv' 'openh264')
+makedepends=('git' 'krb5' 'cmake' 'damageproto')
+arch=('i686' 'x86_64')
+url="http://www.freerdp.com/"
+license=('GPL')
+provides=('freerdp')
+conflicts=('freerdp')
+source=('freerdp::git://github.com/FreeRDP/FreeRDP.git')
+sha256sums=('SKIP')
+
+pkgver() {
+	cd freerdp/
+    major=$(grep "^set(FREERDP_VERSION_MAJOR" CMakeLists.txt| cut -d '"' -f2 )
+    minor=$(grep "^set(FREERDP_VERSION_MINOR" CMakeLists.txt| cut -d '"' -f2 )
+    rev=$(grep "^set(FREERDP_VERSION_REVISION" CMakeLists.txt| cut -d '"' -f2 )
+	printf '%s.r%s.g%s' \
+        "$major.$minor.$rev" \
+		"$(git rev-list --count master)" \
+		"$(git log -1 --format='%h')"
+}
+
+build() {
+	cd freerdp/
+
+	cmake \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DWITH_PULSE=ON \
+		-DWITH_SERVER=ON \
+		-DWITH_OPENH264=ON \
+		.
+	make
+}
+
+package() {
+	cd freerdp/
+
+	make DESTDIR="${pkgdir}/" install
+}
+
