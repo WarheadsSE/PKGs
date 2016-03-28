@@ -29,10 +29,10 @@ source=(http://archlinuxarm.org/builder/xtools/x-tools.tar.xz
         distccd-armv8.conf
         distccd-armv8.service
         )
-md5sums=('8463ba05d3b2b740a7faffd64bc336a4'
-         '77f235aba187a7026e2523f7a61a8e9e'
-         'ebc832213819404d497509949227ba79'
-         '78d4e85721bffb892f8d0a5345082c32'
+md5sums=('686a4baefe536dd89ebd06eb74ad856a'
+         'f961bda4dc7540aa9030ea263b59f2b0'
+         '43562de45d89d1d7de9193c44b2e6909'
+         'dd899df445ce5306041807defdb3c9ce'
          '3706fb6f1c891717861f1101233bebbd'
          '41d29c84a9624653040491226cbf287d'
          'c15d726a8b9708eda6d274dbae11783e'
