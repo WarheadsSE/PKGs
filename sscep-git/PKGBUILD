@@ -1,0 +1,34 @@
+# Maintainer: Jason Plum <max@warheads.net>
+pkgname=sscep-git
+pkgver=20160372
+pkgrel=1
+pkgdesc=""
+arch=('arm' 'armv6h' 'armv7h' 'aarch64' 'i686' 'x86_64')
+url="https://github.com/certnanny/sscep"
+license=('custom')
+makedepends=('git')
+depends=('zlib' 'openssl')
+conflicts=('sscep')
+replaces=('sscep')
+source=("$pkgname::git+https://github.com/certnanny/sscep.git")
+md5sums=('SKIP')
+
+pkgver() {
+	cd $pkgname
+	printf \
+		"$(git rev-list --count master)" \
+		"$(git log -1 --format='%h')"
+}
+
+build() {
+	cd "$pkgname"
+	./Configure --prefix=/usr
+	make sscep_dyn
+}
+
+package() {
+	cd "$pkgname"
+    install -Dm755 sscep_dyn $pkgdir/usr/bin/sscep
+    install -Dm644 COPYRIGHT $pkgdir/usr/share/licenses/sscep/COPYRIGHT
+    install -Dm644 README    $pkgdir/usr/share/doc/sscep/README
+}

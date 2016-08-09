@@ -1,0 +1,26 @@
+# Maintainer: Jason Plum <max@warheads.net>
+pkgname=sscep
+pkgver=0.6.1
+pkgrel=1
+pkgdesc=""
+arch=('arm' 'armv6h' 'armv7h' 'aarch64' 'i686' 'x86_64')
+url="https://github.com/certnanny/sscep"
+license=('custom')
+depends=('zlib' 'openssl')
+backup=()
+source=("https://github.com/certnanny/sscep/archive/v${pkgver}.zip")
+md5sums=('faea30bac6d6f07ea24e1d57c792c39b')
+
+
+build() {
+	cd "$pkgname-$pkgver"
+	./Configure --prefix=/usr
+	make sscep_dyn
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+    install -Dm755 sscep_dyn $pkgdir/usr/bin/sscep
+    install -Dm644 COPYRIGHT $pkgdir/usr/share/licenses/sscep/COPYRIGHT
+    install -Dm644 README    $pkgdir/usr/share/doc/sscep/README
+}
