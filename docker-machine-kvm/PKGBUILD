@@ -1,0 +1,22 @@
+# Maintainer: Jason Plum <jplum@gitlab.com>
+
+pkgname=docker-machine-driver-kvm-bin
+pkgver=0.7.0
+pkgrel=1
+pkgdesc="KVM Driver plugin for docker-machine"
+url="https://github.com/dhiltgen/docker-machine-kvm"
+license=('Apache')
+arch=('x86_64')
+makedepends=()
+provides=('docker-machine-driver-kvm')
+depends=('docker-machine' 'libvirt')
+
+source=("dm-kvm_${pkgver}::https://github.com/dhiltgen/docker-machine-kvm/releases/download/v${pkgver}/docker-machine-driver-kvm")
+sha256sums=('c4ff3eeb5b232aad41942feb8fb46aaaf8d54239408e2f6549468c997a845a31')
+md5sums=('519d29300df740a73c90d048e5df43fb')
+
+
+
+package() {
+  install -Dm755 "${srcdir}/dm-kvm_${pkgver}" "${pkgdir}/usr/bin/docker-machine-driver-kvm"
+}
