@@ -8,7 +8,7 @@ noautobuild=1
 _subarchs=(armv5 armv6h armv7h armv8)
 pkgbase='distccd-alarm'
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
-pkgver=6.1.1
+pkgver=6.2.1
 pkgrel=1
 pkgdesc="An x-tools & distcc services package for Arch Linux ARM"
 arch=('x86_64')
@@ -29,10 +29,10 @@ source=(http://archlinuxarm.org/builder/xtools/x-tools.tar.xz
         distccd-armv8.conf
         distccd-armv8.service
         )
-md5sums=('165245d510fb6f54c657672f343e2b0a'
-         'c598b5e62ae226d8f29693f3bef023fc'
-         'bde98bcbab93c5e0429f59b5c0ddd160'
-         '56df843271022e6737d60b4cd7d1fec5'
+md5sums=('a3a3f6f2866a06687e83677a74a9e75d'
+         '1e3725360bc5600cb37e7cfdf88bc9e8'
+         '988ca5511f6ae080b8973ae7a42ded56'
+         'c459576a7145c421a1e9b5cfbbbbfd9a'
          '3706fb6f1c891717861f1101233bebbd'
          '41d29c84a9624653040491226cbf287d'
          'c15d726a8b9708eda6d274dbae11783e'
@@ -40,8 +40,7 @@ md5sums=('165245d510fb6f54c657672f343e2b0a'
          '717a4bc07b1c7ad4461603a633e6a008'
          'e760b78b6d8c4d94ba1540ee0a9e33b9'
          'ca0ab42032060b2ab5da525bab0a46a8'
-         '3da954cb728f347c142eb42f65477593'
-         )
+         '3da954cb728f347c142eb42f65477593')
 
 _package_subarch() {
     # backup configs
