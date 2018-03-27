@@ -1,0 +1,7 @@
+post_install() {
+  echo '--> This package expects your @VERS@ device to run distccd on port @PORT@'
+  echo '--> Adjust DISTCC_ARGS in /etc/conf.d/distccd on your @VERS@ device to match this'
+  echo '--> ie: DISTCC_ARGS=" ... --port @PORT@ ..."'
+  echo '--> Remember to define the new port in DISTCC_HOSTS in /etc/makepkg.conf as well'
+  echo '--> ie: DISTCC_HOSTS="localhost:@PORT@ foo:@PORT@ bar:@PORT@"'
+}
