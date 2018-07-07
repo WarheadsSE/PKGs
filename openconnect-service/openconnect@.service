@@ -5,7 +5,7 @@ Wants=network.target
 [Service]
 Type=forking
 PIDFile=/run/openconnect@%i.pid
-ExecStart=/usr/bin/openconnect --pid-file=/run/openconnect@%i.pid --background --passwd-on-stdin --config=/etc/openconnect/%i %i
+ExecStart=/bin/sh -c 'cat /etc/openconnect/%i.pass | /usr/bin/openconnect --pid-file=/run/openconnect@%i.pid --background --passwd-on-stdin --config=/etc/openconnect/%i %i'
 KillSignal=SIGINT
 StandardInput=socket
 StandardOutput=journal

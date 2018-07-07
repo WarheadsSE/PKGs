@@ -3,7 +3,7 @@
 
 pkgname=openconnect-service
 pkgver=0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="OpenConnect Service & Socket pair for maintaining VPN with systemd."
 arch=('any')
 url="http://github.com/WarheadsSE/PKGs"
@@ -11,14 +11,17 @@ license=('GPL')
 depends=('openconnect')
 source=(openconnect@.service
         openconnect@.socket
-        vpn.example.com)
+        vpn.example.com
+        vpn.example.com.pass)
 md5sums=(e69349b2f45ff15d9acd5f8202d44370
          d7c6483db3e7f6eec04b8108e88a27e6
-         0725387bef7e3517c7b43c75503d4dc0)
+         0725387bef7e3517c7b43c75503d4dc0
+         06a862eb561bdaff43282470eda8489e)
 
 package() {
     install -dm755 ${pkgdir}/etc/openconnect
     install -m644 ${srcdir}/vpn.example.com ${pkgdir}/etc/openconnect/
+    install -m644 ${srcdir}/vpn.example.com.pass ${pkgdir}/etc/openconnect/
 
     install -dm755 ${pkgdir}/usr/lib/systemd/system
     install -m755 ${srcdir}/openconnect@.service ${pkgdir}/usr/lib/systemd/system/openconnect@.service
